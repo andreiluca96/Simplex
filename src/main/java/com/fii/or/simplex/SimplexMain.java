@@ -14,7 +14,7 @@ public class SimplexMain {
 
     public static void main(String[] args) {
         try {
-            List<String> allLines = Files.readAllLines(Paths.get("/Users/andrluc/Documents/Facultate/Master/OR/Simplex/src/main/java/com/fii/or/simplex/test.txt"));
+            List<String> allLines = Files.readAllLines(Paths.get("D:\\Simplex\\src\\main\\java\\com\\fii\\or\\simplex\\test.txt"));
             restrictions = allLines.size() - 1;
             variables = allLines.get(0).split(" ").length;
 
