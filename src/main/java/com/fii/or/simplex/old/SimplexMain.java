@@ -93,7 +93,11 @@ public class SimplexMain {
 
     private void getSolution(List<List<Double>> simplexTable) {
         List<Double> solution = new ArrayList<>();
-        while (solution.size() < simplexTable.get(0).size()-1) solution.add(0.0);
+
+        while (solution.size() < simplexTable.get(0).size()-1) {
+            solution.add(0.0);
+        }
+
         for (int columnIndex = 0; columnIndex < simplexTable.get(0).size() - 1; columnIndex++) {
             boolean hasOnlyOneOne = false;
             int onePosition = 0;

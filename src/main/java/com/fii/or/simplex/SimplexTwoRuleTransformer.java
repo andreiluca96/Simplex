@@ -49,6 +49,7 @@ public class SimplexTwoRuleTransformer {
             }
         }
 
+
         List<Double> lastLine = new ArrayList<>(Collections.nCopies(firstRuleSimplexTable.get(0).size(), 0.0));
         linesWithFirstRuleSlackVariables
                 .forEach(index -> {
@@ -59,15 +60,71 @@ public class SimplexTwoRuleTransformer {
                         lastLine.set(i, lastLine.get(i) - copyOfRestriction.get(i));
                     }
                 });
-
-
         firstRuleSimplexTable.add(lastLine);
-
-        System.out.println(firstRuleSimplexTable);
 
         new SimplexSolver().applySimplex(firstRuleSimplexTable);
 
-        System.out.println(firstRuleSimplexTable);
+        for (int i = 0; i < firstRuleSimplexTable.size(); i++) {
+            for (int j = 0; j < linesWithFirstRuleSlackVariables.size(); j++) {
+                firstRuleSimplexTable.get(i).remove(firstRuleSimplexTable.get(i).size() - 2);
+            }
+        }
+
+        List<Double> lastLineSecondPhase = new ArrayList<>(Collections.nCopies(firstRuleSimplexTable.get(0).size(), 0.0));
+        for (int columnIndex = 0; columnIndex < firstRuleSimplexTable.get(0).size() - 1; columnIndex++) {
+            boolean hasOnlyOneOne = false;
+            int onePosition = 0;
+            boolean isBasic = true;
+            for (int rowIndex = 0; rowIndex < firstRuleSimplexTable.size(); rowIndex++) {
+                if (firstRuleSimplexTable.get(rowIndex).get(columnIndex) == 1) {
+                    if (!hasOnlyOneOne) {
+                        hasOnlyOneOne = true;
+                        onePosition = rowIndex;
+                    } else {
+                        isBasic = false;
+                        break;
+                    }
+                } else if (firstRuleSimplexTable.get(rowIndex).get(columnIndex) != 0) {
+                    isBasic = false;
+                    break;
+                }
+            }
+            if (isBasic && hasOnlyOneOne) {
+                if (columnIndex < linearProgramStandardFormTable.getNumberOfVariables()) {
+                    List<Double> copyOfCurrentLine = Lists.newArrayList(firstRuleSimplexTable.get(onePosition));
+
+                    copyOfCurrentLine.set(columnIndex, 0.0);
+
+                    for (int i = 0; i < copyOfCurrentLine.size() - 1; i++) {
+                        copyOfCurrentLine.set(
+                                i,
+                                - linearProgramStandardFormTable.getObjectiveFunction().get(columnIndex) * copyOfCurrentLine.get(i)
+                        );
+                    }
+                    copyOfCurrentLine.set(
+                            copyOfCurrentLine.size() - 1,
+                            linearProgramStandardFormTable.getObjectiveFunction().get(columnIndex) * copyOfCurrentLine.get(copyOfCurrentLine.size() - 1)
+                    );
+
+                    for (int i = 0; i < copyOfCurrentLine.size(); i++) {
+                        lastLineSecondPhase.set(i, lastLineSecondPhase.get(i) + copyOfCurrentLine.get(i));
+                    }
+                }
+            } else {
+                if (columnIndex < linearProgramStandardFormTable.getNumberOfVariables()) {
+                    lastLineSecondPhase.set(columnIndex, lastLineSecondPhase.get(columnIndex) + linearProgramStandardFormTable.getObjectiveFunction().get(columnIndex));
+                }
+            }
+        }
+
+        lastLineSecondPhase.set(
+                lastLineSecondPhase.size() - 1,
+                -lastLineSecondPhase.get(lastLineSecondPhase.size() - 1)
+        );
+
+        firstRuleSimplexTable.set(firstRuleSimplexTable.size() - 1, lastLineSecondPhase);
+
+        new SimplexSolver().applySimplex(firstRuleSimplexTable);
 
         return null;
     }
