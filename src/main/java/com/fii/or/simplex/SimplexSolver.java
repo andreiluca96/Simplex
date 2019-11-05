@@ -115,6 +115,7 @@ public class SimplexSolver {
 
     private boolean isDone(List<List<Double>> simplexTable) {
         return simplexTable.get(simplexTable.size() - 1)
+                .subList(0, simplexTable.get(simplexTable.size() - 1).size() - 1)
                 .stream()
                 .allMatch(x -> x >= 0);
     }

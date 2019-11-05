@@ -49,7 +49,6 @@ public class SimplexTwoRuleTransformer {
             }
         }
 
-
         List<Double> lastLine = new ArrayList<>(Collections.nCopies(firstRuleSimplexTable.get(0).size(), 0.0));
         linesWithFirstRuleSlackVariables
                 .forEach(index -> {
@@ -63,6 +62,11 @@ public class SimplexTwoRuleTransformer {
         firstRuleSimplexTable.add(lastLine);
 
         new SimplexSolver().applySimplex(firstRuleSimplexTable);
+
+        if (firstRuleSimplexTable.get(firstRuleSimplexTable.size() - 1).get(firstRuleSimplexTable.get(firstRuleSimplexTable.size() - 1).size() - 1) != 0){
+            System.out.println("Unfeasible problem!");
+            return null;
+        }
 
         for (int i = 0; i < firstRuleSimplexTable.size(); i++) {
             for (int j = 0; j < linesWithFirstRuleSlackVariables.size(); j++) {
