@@ -61,7 +61,13 @@ public class SimplexTwoRuleTransformer {
                 });
         firstRuleSimplexTable.add(lastLine);
 
+        System.out.println("Before Phase 1:");
+        System.out.println(firstRuleSimplexTable);
+
         new SimplexSolver().applySimplex(firstRuleSimplexTable);
+
+        System.out.println("After Phase 1:");
+        System.out.println(firstRuleSimplexTable);
 
         if (firstRuleSimplexTable.get(firstRuleSimplexTable.size() - 1).get(firstRuleSimplexTable.get(firstRuleSimplexTable.size() - 1).size() - 1) != 0){
             System.out.println("Unfeasible problem!");
@@ -128,7 +134,13 @@ public class SimplexTwoRuleTransformer {
 
         firstRuleSimplexTable.set(firstRuleSimplexTable.size() - 1, lastLineSecondPhase);
 
+        System.out.println("Before phase 2:");
+        System.out.println(firstRuleSimplexTable);
+
         new SimplexSolver().applySimplex(firstRuleSimplexTable);
+
+        System.out.println("After phase 2:");
+        System.out.println(firstRuleSimplexTable);
 
         return null;
     }

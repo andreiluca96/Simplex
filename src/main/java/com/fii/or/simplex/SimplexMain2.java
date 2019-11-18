@@ -9,8 +9,9 @@ import java.util.stream.Collectors;
 
 public class SimplexMain2 {
     public static void main(String[] args) {
-//        new SimplexMain2().solveLinearProgram("/Users/andrluc/Documents/Facultate/Master/OR/Simplex/src/main/java/com/fii/or/simplex/data/twophase/seminar_example.txt");
-
+        System.out.println("Seminar example");
+        new SimplexMain2().solveLinearProgram("/Users/andrluc/Documents/Facultate/Master/OR/Simplex/src/main/java/com/fii/or/simplex/data/twophase/seminar_example.txt");
+        System.out.println("--------------");
 
         System.out.println("First example");
         new SimplexMain2().solveLinearProgram("/Users/andrluc/Documents/Facultate/Master/OR/Simplex/src/main/java/com/fii/or/simplex/data/twophase/ex1.txt");
@@ -27,11 +28,7 @@ public class SimplexMain2 {
         System.out.println("Fourth example");
         new SimplexMain2().solveLinearProgram("/Users/andrluc/Documents/Facultate/Master/OR/Simplex/src/main/java/com/fii/or/simplex/data/twophase/ex4.txt");
 
-        System.out.println("--------------");
-//
-//        System.out.println("Old first example");
-//        new SimplexMain2().solveLinearProgram("/Users/andrluc/Documents/Facultate/Master/OR/Simplex/src/main/java/com/fii/or/simplex/data/homework/homework1.txt");
-    }
+        System.out.println("--------------"); }
 
     void solveLinearProgram(String filePath) {
         /* Read the table as as text. */
@@ -60,9 +57,5 @@ public class SimplexMain2 {
 
             new SimplexSolver().applySimplex(simplexTable);
         }
-
-        // solve
-
-
     }
 }
