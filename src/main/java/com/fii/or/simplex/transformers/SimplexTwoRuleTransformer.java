@@ -1,5 +1,6 @@
-package com.fii.or.simplex;
+package com.fii.or.simplex.transformers;
 
+import com.fii.or.simplex.solvers.SimplexSolver;
 import com.fii.or.simplex.model.LinearProgramStandardFormTable;
 import com.google.common.collect.Lists;
 

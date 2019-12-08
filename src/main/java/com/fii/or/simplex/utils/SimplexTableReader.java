@@ -1,4 +1,4 @@
-package com.fii.or.simplex;
+package com.fii.or.simplex.utils;
 
 import com.fii.or.simplex.model.LinearProgramInputTable;
 import com.fii.or.simplex.model.OptimizationFunction;

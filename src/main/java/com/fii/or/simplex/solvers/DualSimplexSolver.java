@@ -1,4 +1,4 @@
-package com.fii.or.simplex;
+package com.fii.or.simplex.solvers;
 
 import com.google.common.collect.Lists;
 

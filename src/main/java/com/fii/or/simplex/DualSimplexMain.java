@@ -2,6 +2,9 @@ package com.fii.or.simplex;
 
 import com.fii.or.simplex.model.LinearProgramInputTable;
 import com.fii.or.simplex.model.LinearProgramStandardFormTable;
+import com.fii.or.simplex.solvers.DualSimplexSolver;
+import com.fii.or.simplex.transformers.SimplexStandardFormTransformer;
+import com.fii.or.simplex.utils.SimplexTableReader;
 import com.google.common.collect.Lists;
 
 import java.util.List;
