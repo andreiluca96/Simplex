@@ -6,7 +6,7 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class SimplexSolver {
-    public void applySimplex(List<List<Double>> simplexTable) {
+    public List<Double> applySimplex(List<List<Double>> simplexTable) {
         while (!isDone(simplexTable)) {
             int pivotColumnIndex = getFirstNegativeIndex(simplexTable);
             List<Double> ratios = computeRatios(simplexTable, pivotColumnIndex);
@@ -15,17 +15,17 @@ public class SimplexSolver {
                 pivotRowIndex = getSmallestPositiveRatio(ratios);
             } catch (ArithmeticException e) {
                 System.out.println("Problem is unbounded");
-                return;
+                return ratios;
             }
             applyPivoting(simplexTable, pivotRowIndex, pivotColumnIndex);
         }
         if (hasMultipleSolutions(simplexTable)) {
             System.out.println("Problem has more than one optimal solutions");
         }
-        getSolution(simplexTable);
+        return getSolution(simplexTable);
     }
 
-    private void getSolution(List<List<Double>> simplexTable) {
+    private List<Double> getSolution(List<List<Double>> simplexTable) {
         List<Double> solution = new ArrayList<>();
         while (solution.size() < simplexTable.get(0).size()-1) solution.add(0.0);
         for (int columnIndex = 0; columnIndex < simplexTable.get(0).size() - 1; columnIndex++) {
@@ -50,10 +50,15 @@ public class SimplexSolver {
                 solution.set(columnIndex, simplexTable.get(onePosition).get(simplexTable.get(onePosition).size()-1));
             }
         }
+
+        double optimalValue = -simplexTable.get(simplexTable.size() - 1)
+                .get(simplexTable.get(simplexTable.size() - 1).size() - 1);
         System.out.println("Solution is " + solution.stream().map(Object::toString).reduce((a, b) -> a + " " + b).get() +
                 " with optimal value "
-                + -simplexTable.get(simplexTable.size() - 1)
-                .get(simplexTable.get(simplexTable.size() - 1).size() - 1));
+                + optimalValue);
+
+        solution.add(optimalValue);
+        return solution;
     }
 
     private int getSmallestPositiveRatio(List<Double> ratios) throws ArithmeticException {

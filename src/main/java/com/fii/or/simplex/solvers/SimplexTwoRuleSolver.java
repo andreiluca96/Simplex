@@ -1,6 +1,6 @@
-package com.fii.or.simplex.transformers;
+package com.fii.or.simplex.solvers;
 
-import com.fii.or.simplex.solvers.SimplexSolver;
+import com.fii.or.simplex.exceptions.UnfeasibleSolutionException;
 import com.fii.or.simplex.model.LinearProgramStandardFormTable;
 import com.google.common.collect.Lists;
 
@@ -9,7 +9,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class SimplexTwoRuleTransformer {
+public class SimplexTwoRuleSolver {
     public static boolean needsTransformation(LinearProgramStandardFormTable linearProgramStandardFormTable) {
         for (int i = 0; i < linearProgramStandardFormTable.getRestrictions().size(); i++) {
             Double slackVariableValueForRestriction = linearProgramStandardFormTable.getSlackVariableValueForRestriction(i);
@@ -22,7 +22,7 @@ public class SimplexTwoRuleTransformer {
         return false;
     }
 
-    public static List<List<Double>> applyFirstRuleTransformation(LinearProgramStandardFormTable linearProgramStandardFormTable) {
+    public static List<Double> solve(LinearProgramStandardFormTable linearProgramStandardFormTable) throws UnfeasibleSolutionException {
         /* Copy the current restrictions. */
         List<List<Double>> firstRuleSimplexTable = Lists.newArrayList(
                 linearProgramStandardFormTable.getRestrictions()
@@ -71,8 +71,7 @@ public class SimplexTwoRuleTransformer {
         System.out.println(firstRuleSimplexTable);
 
         if (firstRuleSimplexTable.get(firstRuleSimplexTable.size() - 1).get(firstRuleSimplexTable.get(firstRuleSimplexTable.size() - 1).size() - 1) != 0){
-            System.out.println("Unfeasible problem!");
-            return null;
+            throw new UnfeasibleSolutionException();
         }
 
         for (int i = 0; i < firstRuleSimplexTable.size(); i++) {
@@ -138,11 +137,11 @@ public class SimplexTwoRuleTransformer {
         System.out.println("Before phase 2:");
         System.out.println(firstRuleSimplexTable);
 
-        new SimplexSolver().applySimplex(firstRuleSimplexTable);
+        List<Double> solution = new SimplexSolver().applySimplex(firstRuleSimplexTable);
 
         System.out.println("After phase 2:");
         System.out.println(firstRuleSimplexTable);
 
-        return null;
+        return solution;
     }
 }
