@@ -12,25 +12,28 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Stack;
 
+import static java.lang.Math.abs;
+import static java.lang.Math.round;
+
 public class BranchAndBoundMain {
     public static void main(String[] args) {
         System.out.println("Seminar example");
-        new BranchAndBoundMain().solveLinearProgram("/Users/andrluc/Documents/facultate/or/Simplex/src/main/java/com/fii/or/simplex/data/bnb/seminar_example.txt");
+        new BranchAndBoundMain().solveLinearProgram("D:\\Simplex\\src\\main\\java\\com\\fii\\or\\simplex\\data\\integer\\seminar_example.txt");
         System.out.println("--------------");
-
-        System.out.println("First example");
-        new BranchAndBoundMain().solveLinearProgram("/Users/andrluc/Documents/facultate/or/Simplex/src/main/java/com/fii/or/simplex/data/bnb/ex1.txt");
-        System.out.println("--------------");
-
-        System.out.println("Second example");
-        new BranchAndBoundMain().solveLinearProgram("/Users/andrluc/Documents/facultate/or/Simplex/src/main/java/com/fii/or/simplex/data/bnb/ex2.txt");
-        System.out.println("--------------");
-
-        System.out.println("Third example");
-        new BranchAndBoundMain().solveLinearProgram("/Users/andrluc/Documents/facultate/or/Simplex/src/main/java/com/fii/or/simplex/data/bnb/ex3.txt");
-        System.out.println("--------------");
-
-        System.out.println("--------------");
+//
+//        System.out.println("First example");
+//        new BranchAndBoundMain().solveLinearProgram("/Users/andrluc/Documents/facultate/or/Simplex/src/main/java/com/fii/or/simplex/data/integer/ex1.txt");
+//        System.out.println("--------------");
+//
+//        System.out.println("Second example");
+//        new BranchAndBoundMain().solveLinearProgram("/Users/andrluc/Documents/facultate/or/Simplex/src/main/java/com/fii/or/simplex/data/integer/ex2.txt");
+//        System.out.println("--------------");
+//
+//        System.out.println("Third example");
+//        new BranchAndBoundMain().solveLinearProgram("/Users/andrluc/Documents/facultate/or/Simplex/src/main/java/com/fii/or/simplex/data/integer/ex3.txt");
+//        System.out.println("--------------");
+//
+//        System.out.println("--------------");
     }
 
     void solveLinearProgram(String filePath) {
@@ -43,7 +46,7 @@ public class BranchAndBoundMain {
 
         /* Solution of the integer programming problem */
         List<Double> solution = null;
-        double optimalValue = -999999;
+        double globalOptimalValue = -999999;
 
         /* Stack for the branch and bound method */
         Stack<LinearProgramStandardFormTable> problemsStack = new Stack<>();
@@ -60,14 +63,15 @@ public class BranchAndBoundMain {
                 continue;
             }
 
-            Double currentOptimalValue = -currentSolution.get(currentSolution.size() - 1);
-            if (currentOptimalValue > optimalValue) {
+            double currentOptimalValue = -currentSolution.get(currentSolution.size() - 1);
+            if (currentOptimalValue > globalOptimalValue) {
                 /* Check if the solutions are integer or not. */
                 boolean ok = true;
                 for (int i = 0; i < currentSolution.size(); i++) {
-                    if (currentSolution.get(i) % 1 <= 0.0001) {
+                    double x = currentSolution.get(i);
+                    if (abs(abs(x) - round(abs(x))) <= 0.0001) {
                         if (i == currentSolution.size() - 1 && ok) {
-                            optimalValue = currentOptimalValue;
+                            globalOptimalValue = currentOptimalValue;
                             solution = Lists.newArrayList(currentSolution);
                         }
                     } else {

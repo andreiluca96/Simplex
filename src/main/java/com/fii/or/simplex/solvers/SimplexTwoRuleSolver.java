@@ -3,6 +3,7 @@ package com.fii.or.simplex.solvers;
 import com.fii.or.simplex.exceptions.UnfeasibleSolutionException;
 import com.fii.or.simplex.model.LinearProgramStandardFormTable;
 import com.google.common.collect.Lists;
+import lombok.Getter;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -10,6 +11,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class SimplexTwoRuleSolver {
+    @Getter
+    private static List<List<Double>> computedSimplexTable;
     public static boolean needsTransformation(LinearProgramStandardFormTable linearProgramStandardFormTable) {
         for (int i = 0; i < linearProgramStandardFormTable.getRestrictions().size(); i++) {
             Double slackVariableValueForRestriction = linearProgramStandardFormTable.getSlackVariableValueForRestriction(i);
@@ -141,6 +144,8 @@ public class SimplexTwoRuleSolver {
 
         System.out.println("After phase 2:");
         System.out.println(firstRuleSimplexTable);
+
+        computedSimplexTable = firstRuleSimplexTable;
 
         return solution;
     }
