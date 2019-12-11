@@ -65,13 +65,13 @@ public class SimplexTwoRuleSolver {
                 });
         firstRuleSimplexTable.add(lastLine);
 
-        System.out.println("Before Phase 1:");
-        System.out.println(firstRuleSimplexTable);
+//        System.out.println("Before Phase 1:");
+//        System.out.println(firstRuleSimplexTable);
 
         new SimplexSolver().applySimplex(firstRuleSimplexTable);
 
-        System.out.println("After Phase 1:");
-        System.out.println(firstRuleSimplexTable);
+//        System.out.println("After Phase 1:");
+//        System.out.println(firstRuleSimplexTable);
 
         if (firstRuleSimplexTable.get(firstRuleSimplexTable.size() - 1).get(firstRuleSimplexTable.get(firstRuleSimplexTable.size() - 1).size() - 1) != 0){
             throw new UnfeasibleSolutionException();
@@ -137,13 +137,13 @@ public class SimplexTwoRuleSolver {
 
         firstRuleSimplexTable.set(firstRuleSimplexTable.size() - 1, lastLineSecondPhase);
 
-        System.out.println("Before phase 2:");
-        System.out.println(firstRuleSimplexTable);
+//        System.out.println("Before phase 2:");
+//        System.out.println(firstRuleSimplexTable);
 
         List<Double> solution = new SimplexSolver().applySimplex(firstRuleSimplexTable);
 
-        System.out.println("After phase 2:");
-        System.out.println(firstRuleSimplexTable);
+//        System.out.println("After phase 2:");
+//        System.out.println(firstRuleSimplexTable);
 
         computedSimplexTable = firstRuleSimplexTable;
 

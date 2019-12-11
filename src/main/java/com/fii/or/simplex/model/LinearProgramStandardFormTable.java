@@ -2,6 +2,7 @@ package com.fii.or.simplex.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -14,6 +15,7 @@ import java.util.Optional;
 @ToString
 @AllArgsConstructor
 @Builder(toBuilder=true)
+@EqualsAndHashCode
 public class LinearProgramStandardFormTable {
     private int numberOfVariables;
     private int numberOfRestrictions;
