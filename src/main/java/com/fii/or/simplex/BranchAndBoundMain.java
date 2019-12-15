@@ -8,9 +8,10 @@ import com.fii.or.simplex.transformers.SimplexStandardFormTransformer;
 import com.fii.or.simplex.utils.SimplexTableReader;
 import com.google.common.collect.Lists;
 
+import java.util.ArrayDeque;
 import java.util.Collections;
 import java.util.List;
-import java.util.Stack;
+import java.util.Queue;
 import java.util.stream.Collectors;
 
 import static java.lang.Math.abs;
@@ -18,22 +19,20 @@ import static java.lang.Math.round;
 
 public class BranchAndBoundMain {
     public static void main(String[] args) {
-//        System.out.println("Seminar example");
-//        new BranchAndBoundMain().solveLinearProgram("/Users/andrluc/Documents/facultate/or/Simplex/src/main/java/com/fii/or/simplex/data/integer/seminar_example.txt");
-//        System.out.println("--------------");
-////
-//        System.out.println("First example");
-//        new BranchAndBoundMain().solveLinearProgram("/Users/andrluc/Documents/facultate/or/Simplex/src/main/java/com/fii/or/simplex/data/integer/ex1.txt");
-//        System.out.println("--------------");
-
-//        System.out.println("Second example");
-//        new BranchAndBoundMain().solveLinearProgram("/Users/andrluc/Documents/facultate/or/Simplex/src/main/java/com/fii/or/simplex/data/integer/ex2.txt");
-//        System.out.println("--------------");
-//
-        System.out.println("Third example");
-        new BranchAndBoundMain().solveLinearProgram("/Users/andrluc/Documents/facultate/or/Simplex/src/main/java/com/fii/or/simplex/data/integer/ex3.txt");
+        System.out.println("Seminar example");
+        new BranchAndBoundMain().solveLinearProgram("/Users/andrluc/Documents/facultate/or/Simplex/src/main/java/com/fii/or/simplex/data/integer/seminar_example.txt");
         System.out.println("--------------");
 
+        System.out.println("First example");
+        new BranchAndBoundMain().solveLinearProgram("/Users/andrluc/Documents/facultate/or/Simplex/src/main/java/com/fii/or/simplex/data/integer/ex1.txt");
+        System.out.println("--------------");
+
+        System.out.println("Second example");
+        new BranchAndBoundMain().solveLinearProgram("/Users/andrluc/Documents/facultate/or/Simplex/src/main/java/com/fii/or/simplex/data/integer/ex2.txt");
+        System.out.println("--------------");
+
+        System.out.println("Third example");
+        new BranchAndBoundMain().solveLinearProgram("/Users/andrluc/Documents/facultate/or/Simplex/src/main/java/com/fii/or/simplex/data/integer/ex3.txt");
         System.out.println("--------------");
     }
 
@@ -50,11 +49,11 @@ public class BranchAndBoundMain {
         double globalOptimalValue = -999999;
 
         /* Stack for the branch and bound method */
-        Stack<LinearProgramStandardFormTable> problemsStack = new Stack<>();
-        problemsStack.push(linearProgramStandardFormTable);
+        Queue<LinearProgramStandardFormTable> problemsStack = new ArrayDeque<>();
+        problemsStack.add(linearProgramStandardFormTable);
 
-        while (!problemsStack.empty()) {
-            LinearProgramStandardFormTable currentProblem = problemsStack.pop();
+        while (!problemsStack.isEmpty()) {
+            LinearProgramStandardFormTable currentProblem = problemsStack.remove();
 
             List<Double> currentSolution;
             try {
@@ -118,10 +117,10 @@ public class BranchAndBoundMain {
                                 .build();
 
                         if (!problemsStack.contains(newProblem1)) {
-                            problemsStack.push(newProblem1);
+                            problemsStack.add(newProblem1);
                         }
                         if (!problemsStack.contains(newProblem2)) {
-                            problemsStack.push(newProblem2);
+                            problemsStack.add(newProblem2);
                         }
                     }
                 }
