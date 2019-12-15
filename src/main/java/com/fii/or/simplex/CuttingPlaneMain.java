@@ -7,38 +7,34 @@ import com.fii.or.simplex.model.Restriction;
 import com.fii.or.simplex.solvers.SimplexTwoRuleSolver;
 import com.fii.or.simplex.transformers.SimplexStandardFormTransformer;
 import com.fii.or.simplex.utils.SimplexTableReader;
-import com.google.common.collect.Lists;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 import static java.lang.Math.abs;
-import static java.lang.Math.floor;
 import static java.lang.Math.round;
 
 public class CuttingPlaneMain {
     public static void main(String[] args) {
-        System.out.println("Seminar example");
-        new CuttingPlaneMain().solveLinearProgram(
-                "D:\\Simplex\\src\\main\\java\\com\\fii\\or\\simplex\\data\\integer\\seminar_example.txt");
-        System.out.println("--------------");
+//        System.out.println("Seminar example");
+//        new CuttingPlaneMain().solveLinearProgram(
+//                "/Users/andrluc/Documents/facultate/or/Simplex/src/main/java/com/fii/or/simplex/data/integer/seminar_example.txt");
+//        System.out.println("--------------");
+//
+//        System.out.println("First example");
+//        new CuttingPlaneMain().solveLinearProgram(
+//                "/Users/andrluc/Documents/facultate/or/Simplex/src/main/java/com/fii/or/simplex/data/integer/ex1.txt");
+//        System.out.println("--------------");
+//
+//        System.out.println("Second example");
+//        new CuttingPlaneMain().solveLinearProgram(
+//                "/Users/andrluc/Documents/facultate/or/Simplex/src/main/java/com/fii/or/simplex/data/integer/ex2.txt");
+//        System.out.println("--------------");
 
-        //        System.out.println("First example");
-        //        new CuttingPlaneMain().solveLinearProgram(
-        //                "/Users/andrluc/Documents/facultate/or/Simplex/src/main/java/com/fii/or/simplex/data/integer/ex1.txt");
-        //        System.out.println("--------------");
-        //
-        //        System.out.println("Second example");
-        //        new CuttingPlaneMain().solveLinearProgram(
-        //                "/Users/andrluc/Documents/facultate/or/Simplex/src/main/java/com/fii/or/simplex/data/integer/ex2.txt");
-        //        System.out.println("--------------");
-        //
-        //        System.out.println("Third example");
-        //        new CuttingPlaneMain().solveLinearProgram(
-        //                "/Users/andrluc/Documents/facultate/or/Simplex/src/main/java/com/fii/or/simplex/data/integer/ex3.txt");
-        //        System.out.println("--------------");
-        //
-        //        System.out.println("--------------");
+        System.out.println("Third example");
+        new CuttingPlaneMain().solveLinearProgram(
+                "/Users/andrluc/Documents/facultate/or/Simplex/src/main/java/com/fii/or/simplex/data/integer/ex3.txt");
+        System.out.println("--------------");
     }
 
     void solveLinearProgram(String filePath) {
