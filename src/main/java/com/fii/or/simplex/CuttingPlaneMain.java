@@ -69,7 +69,7 @@ public class CuttingPlaneMain {
             List<Double> chosenRow =
                     simplexTable.subList(0, simplexTable.size() - 1)
                             .stream()
-                            .filter(row -> row.get(row.size() - 1) % 1 >= 0.0001)
+                            .filter(row -> abs(abs(row.get(row.size()-1)) - round(abs(row.get(row.size()-1)))) >= 0.0001)
                             .findFirst()
                             .get()
                             .stream()

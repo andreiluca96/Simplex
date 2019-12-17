@@ -22,13 +22,13 @@ public class SimplexStandardFormTransformer {
                 .collect(Collectors.toList());
 
         /* Add slack variables where needed. */
-        addSlackVariables(linearProgramInputTable, restrictions);
+        int numberOfSlackVariables = addSlackVariables(linearProgramInputTable, restrictions);
 
         /* Add the result to the restrictions' expressions. */
         addRestrictionResult(linearProgramInputTable, restrictions);
 
         int numberOfRestrictions = restrictions.size();
-        int numberOfSlackVariables = restrictions.size();
+//        int numberOfSlackVariables = restrictions.size();
 //        int numberOfSlackVariables = restrictions.get(0).size() - numberOfVariables + 1;
 
         return new LinearProgramStandardFormTable(
@@ -82,7 +82,8 @@ public class SimplexStandardFormTransformer {
         }
     }
 
-    private static void addSlackVariables(LinearProgramInputTable linearProgramInputTable, List<List<Double>> restrictions) {
+    private static int addSlackVariables(LinearProgramInputTable linearProgramInputTable, List<List<Double>> restrictions) {
+        int slackVariables = 0;
         for (int i = 0; i < linearProgramInputTable.getRestrictions().size(); i++) {
             Restriction currentRestriction = linearProgramInputTable.getRestrictions().get(i);
 
@@ -90,6 +91,7 @@ public class SimplexStandardFormTransformer {
             switch(operator) {
                 case "lt": {
                     /* We need to simply add a slack variable. */
+                    slackVariables += 1;
                     for (int j = 0; j < linearProgramInputTable.getRestrictions().size(); j++) {
                         if (i == j) {
                             restrictions.get(i).add(1.0);
@@ -101,6 +103,7 @@ public class SimplexStandardFormTransformer {
                     break;
                 }
                 case "gt": {
+                    slackVariables += 1;
                     /* We need to multiply with -1 the whole currentRestriction and add a slack variable. */
                     restrictions.set(i, restrictions.get(i).stream()
                             .map(aDouble -> aDouble * -1)
@@ -123,6 +126,7 @@ public class SimplexStandardFormTransformer {
                     throw new IllegalStateException("Unexpected value: " + operator);
             }
         }
+        return slackVariables;
     }
 
     private static List<Double> transformObjectiveFunction(OptimizationFunction objectiveFunction) {

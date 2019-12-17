@@ -16,7 +16,8 @@ import java.util.stream.IntStream;
 public class PrimalDualInteriorPointMain {
     public static void main(String[] args) {
         solvePrimalDualInteriorPointProblem(
-                "D:\\Simplex\\src\\main\\java\\com\\fii\\or\\simplex\\data\\interior_point\\course.txt");
+                "/Users/andrluc/Documents/facultate/or/Simplex/src/main/java/com/fii/or/simplex/data/interior_point/ex2.txt");
+//                "D:\\Simplex\\src\\main\\java\\com\\fii\\or\\simplex\\data\\interior_point\\course.txt");
     }
 
     private static void solvePrimalDualInteriorPointProblem(String filePath) {
@@ -55,12 +56,12 @@ public class PrimalDualInteriorPointMain {
 
         // Initialize x, s, y randomly
         Random random = new Random();
-//        double[] xArray = random.doubles(n, 0, 1).toArray();
-        double[] xArray = new double[] {0.5, 0.5, 2.5, 6.5, 1.5}; // course init
-//        double[] sArray = random.doubles(n, 0, 1).toArray();
-        double[] sArray = new double[] {1, 11, 1, 1, 5}; // course init
-//        double[] yArray = random.doubles(inputTable.getNumberOfRestrictions(), 0, 1).toArray();
-        double[] yArray = new double[] {-1,-1,-5}; // course init
+        double[] xArray = random.doubles(n, 0, 1).toArray();
+//        double[] xArray = new double[] {0.5, 0.5, 2.5, 6.5, 1.5}; // course init
+        double[] sArray = random.doubles(n, 0, 1).toArray();
+//        double[] sArray = new double[] {1, 11, 1, 1, 5}; // course init
+        double[] yArray = random.doubles(inputTable.getNumberOfRestrictions(), 0, 1).toArray();
+//        double[] yArray = new double[] {-1,-1,-5}; // course init
         double[] dArray = new double[n];
         for (int i = 0; i < xArray.length; i++) {
             dArray[i] = xArray[i] / sArray[i];
@@ -94,27 +95,29 @@ public class PrimalDualInteriorPointMain {
                 dArray[i] = equation.lookupDDRM("x").data[i] / equation.lookupDDRM("s").data[i];
             }
             D = SimpleMatrix.diag(dArray);
+            equation.alias(S, "S");
+            equation.alias(D, "D");
 
             // Matrix operations
             equation.process("rokp = b - A*x");
             equation.process("rokd = c - A'*y - s");
             equation.process("v = mu - x.*s");
-            equation.process("deltay = -(inv(A*D*A') * (A*inv(S)*v - A*D*rokd - rokp))");
+            equation.process("deltay = -(inv(A*D*A')) * (A*inv(S)*v - A*D*rokd - rokp)");
             equation.process("deltas = -A'*deltay + rokd");
             equation.process("deltax = inv(S)*v - D*deltas");
 
             // Alpha computation
             alphax = IntStream.range(0, equation.lookupDDRM("x").data.length)
-                    .mapToObj(i -> equation.lookupDDRM("x").data[i] + ":" + equation
-                            .lookupDDRM("deltax").data[i])
+                    .mapToObj(i -> equation.lookupDDRM("x").data[i] + ":" +
+                                   equation.lookupDDRM("deltax").data[i])
                     .filter(pair -> Double.parseDouble(pair.split(":")[1]) < 0)
                     .mapToDouble(pair -> -Double.parseDouble(pair.split(":")[0]) / Double
                             .parseDouble(pair.split(":")[1]))
                     .min()
                     .orElse(1.0d);
             alphas = IntStream.range(0, equation.lookupDDRM("s").data.length)
-                    .mapToObj(i -> equation.lookupDDRM("s").data[i] + ":" + equation
-                            .lookupDDRM("deltas").data[i])
+                    .mapToObj(i -> equation.lookupDDRM("s").data[i] + ":" +
+                                   equation.lookupDDRM("deltas").data[i])
                     .filter(pair -> Double.parseDouble(pair.split(":")[1]) < 0)
                     .mapToDouble(pair -> -Double.parseDouble(pair.split(":")[0]) / Double
                             .parseDouble(pair.split(":")[1]))
@@ -135,11 +138,12 @@ public class PrimalDualInteriorPointMain {
             // Stop criteria
             equation.process("gap = x' * s");
             equation.process("gap_norm_matrix = [alpha * deltax;alpha*deltay;alpha*deltas]");
-            System.out.println("Iteration " + k + "\nGap: " + (equation.lookupDouble("gap") - n * mu) +"; mu: " + mu);
+
+            k += 1;
+            System.out.println("Iteration " + k + "\nGap: " + (equation.lookupDouble("gap") - n * mu) + "; mu: " + mu);
 
             mu = theta * mu;
             equation.alias(mu, "mu");
-            k += 1;
         } while ((Math.abs(equation.lookupDouble("gap")) > epsilon) &&
                 (k < kmax) &&
                 (NormOps_DDRM.normP2(equation.lookupDDRM("gap_norm_matrix")) < Math.pow(10, q)));

@@ -14,24 +14,25 @@ import java.util.stream.Collectors;
 
 public class SimplexMain {
     public static void main(String[] args) {
-        System.out.println("Seminar example");
-        new SimplexMain().solveLinearProgram("/Users/andrluc/Documents/facultate/or/Simplex/src/main/java/com/fii/or/simplex/data/twophase//seminar_example.txt");
-        System.out.println("--------------");
-
-        System.out.println("First example");
-        new SimplexMain().solveLinearProgram("/Users/andrluc/Documents/facultate/or/Simplex/src/main/java/com/fii/or/simplex/data/twophase//ex1.txt");
-        System.out.println("--------------");
-
-        System.out.println("Second example");
-        new SimplexMain().solveLinearProgram("/Users/andrluc/Documents/facultate/or/Simplex/src/main/java/com/fii/or/simplex/data/twophase//ex2.txt");
-        System.out.println("--------------");
-
-        System.out.println("Third example");
-        new SimplexMain().solveLinearProgram("/Users/andrluc/Documents/facultate/or/Simplex/src/main/java/com/fii/or/simplex/data/twophase//ex3.txt");
-        System.out.println("--------------");
-
-        System.out.println("Fourth example");
-        new SimplexMain().solveLinearProgram("/Users/andrluc/Documents/facultate/or/Simplex/src/main/java/com/fii/or/simplex/data/twophase//ex4.txt");
+//        System.out.println("Seminar example");
+//        new SimplexMain().solveLinearProgram("/Users/andrluc/Documents/facultate/or/Simplex/src/main/java/com/fii/or/simplex/data/twophase//seminar_example.txt");
+//        System.out.println("--------------");
+//
+//        System.out.println("First example");
+//        new SimplexMain().solveLinearProgram("/Users/andrluc/Documents/facultate/or/Simplex/src/main/java/com/fii/or/simplex/data/twophase//ex1.txt");
+//        System.out.println("--------------");
+//
+//        System.out.println("Second example");
+//        new SimplexMain().solveLinearProgram("/Users/andrluc/Documents/facultate/or/Simplex/src/main/java/com/fii/or/simplex/data/twophase//ex2.txt");
+//        System.out.println("--------------");
+//
+//        System.out.println("Third example");
+//        new SimplexMain().solveLinearProgram("/Users/andrluc/Documents/facultate/or/Simplex/src/main/java/com/fii/or/simplex/data/twophase//ex3.txt");
+//        System.out.println("--------------");
+//
+//        System.out.println("Fourth example");
+//        new SimplexMain().solveLinearProgram("/Users/andrluc/Documents/facultate/or/Simplex/src/main/java/com/fii/or/simplex/data/twophase//ex4.txt");
+        new SimplexMain().solveLinearProgram("/Users/andrluc/Documents/facultate/or/Simplex/src/main/java/com/fii/or/simplex/data/integer//ex3debug.txt");
 
         System.out.println("--------------"); }
 
