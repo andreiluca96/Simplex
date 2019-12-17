@@ -7,9 +7,11 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="simplex" />
+        <module name="Simplex" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="Simplex" target="8" />
       <module name="simplex" target="8" />
     </bytecodeTargetLevel>
   </component>

@@ -28,7 +28,8 @@ public class SimplexStandardFormTransformer {
         addRestrictionResult(linearProgramInputTable, restrictions);
 
         int numberOfRestrictions = restrictions.size();
-        int numberOfSlackVariables = restrictions.get(0).size() - numberOfVariables + 1;
+        int numberOfSlackVariables = restrictions.size();
+//        int numberOfSlackVariables = restrictions.get(0).size() - numberOfVariables + 1;
 
         return new LinearProgramStandardFormTable(
                 numberOfVariables,
