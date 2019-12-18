@@ -7,6 +7,8 @@ import com.fii.or.simplex.model.Restriction;
 import com.fii.or.simplex.solvers.SimplexTwoRuleSolver;
 import com.fii.or.simplex.transformers.SimplexStandardFormTransformer;
 import com.fii.or.simplex.utils.SimplexTableReader;
+import com.google.common.primitives.Doubles;
+import org.ejml.simple.SimpleMatrix;
 
 import java.util.List;
 import java.util.stream.Collectors;

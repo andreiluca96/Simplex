@@ -15,12 +15,18 @@ import java.util.stream.IntStream;
 
 public class PrimalDualInteriorPointMain {
     public static void main(String[] args) {
-        solvePrimalDualInteriorPointProblem(
+        System.out.println("Course example\n--------------");
+        new PrimalDualInteriorPointMain().solvePrimalDualInteriorPointProblem(
+                "/Users/andrluc/Documents/facultate/or/Simplex/src/main/java/com/fii/or/simplex/data/interior_point/course.txt");
+        System.out.println("\n\nFirst exercise\n--------------");
+        new PrimalDualInteriorPointMain().solvePrimalDualInteriorPointProblem(
+                "/Users/andrluc/Documents/facultate/or/Simplex/src/main/java/com/fii/or/simplex/data/interior_point/ex1.txt");
+        System.out.println("\n\nSecond exercise\n--------------");
+        new PrimalDualInteriorPointMain().solvePrimalDualInteriorPointProblem(
                 "/Users/andrluc/Documents/facultate/or/Simplex/src/main/java/com/fii/or/simplex/data/interior_point/ex2.txt");
-//                "D:\\Simplex\\src\\main\\java\\com\\fii\\or\\simplex\\data\\interior_point\\course.txt");
     }
 
-    private static void solvePrimalDualInteriorPointProblem(String filePath) {
+    private void solvePrimalDualInteriorPointProblem(String filePath) {
         // Read problem from file
         LinearProgramStandardFormTable inputTable = SimplexStandardFormTransformer
                 .transformToStandardForm(SimplexTableReader.readTable(filePath));
@@ -151,6 +157,8 @@ public class PrimalDualInteriorPointMain {
                 (Math.abs(equation.lookupDouble("gap")) > epsilon ? "" : "gap " + Math.abs(equation.lookupDouble("gap")) + " < " + epsilon) +
                 (k < kmax ? "" : "iteration end " + kmax) +
                 (NormOps_DDRM.normP2(equation.lookupDDRM("gap_norm_matrix")) < Math.pow(10, q) ? "" : " norm " + NormOps_DDRM.normP2(equation.lookupDDRM("gap_norm_matrix")) + " > " + Math.pow(10, q)));
-        System.out.println(x + "\n" + y);
+        System.out.println("Primal solution: " +x + "\nDual solution: " + y);
+        SimpleMatrix objectiveVector = new SimpleMatrix(new double[][]{Doubles.toArray(inputTable.getObjectiveFunction().subList(0, inputTable.getObjectiveFunction().size() - 1))});
+        System.out.println("Objective function value: " + objectiveVector.mult(x).get(0,0));
     }
 }
